@@ -4,21 +4,21 @@
 
 class Solution:
     def wordsTyping(self, sentence: List[str], rows: int, cols: int) -> int:
-        if max(len(word) for word in sentence) > cols:
+        lenSen = [len(word) for word in sentence]
+        if max(lenSen) > cols:
             return 0
-        
-        rowNeed = 0
+        rowNeed = 1
         curRow = 0
         senCnt = 0
         while True:
-            if rowNeed > rows:
-                break
-            for word in sentence:
-                curRow += len(word)
+            for lenWord in lenSen:
+                curRow += lenWord
                 if curRow <= cols:
                     curRow += 1
                 else:
                     rowNeed += 1
-                    curRow = 0
-            sentence += 1
-        
+                    curRow = lenWord + 1
+            if rowNeed >= rows + 1:
+                break
+            senCnt += 1
+        return senCnt
